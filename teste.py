@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Ler o arquivo Excel
-df = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\ARQUIVO BATIMENTO FILTRADO - 22.08.xlsx")
+df = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\ARQUIVO BATIMENTO FILTRADO - 23.08.xlsx")
 
 # Quantas linhas cada consignatária possui
 consignataria_counts = df['CONSIGNATARIA'].value_counts()
@@ -10,7 +10,7 @@ consignataria_counts = df['CONSIGNATARIA'].value_counts()
 unique_cpf_count = df['CPF'].nunique()
 
 # Ler o novo arquivo Excel
-df_new = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\ARQUIVO BATIMENTO FILTRADO - 23.08.xlsx")
+df_new = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\ARQUIVO BATIMENTO FILTRADO - 24.08.xlsx")
 
 # Diferença no número total de registros entre os dois arquivos
 total_difference = len(df_new) - len(df)
@@ -28,11 +28,11 @@ missing_consignatarias = set(df['CONSIGNATARIA']) - set(df_new['CONSIGNATARIA'])
 diff_rows = df_new[~df_new.apply(tuple, 1).isin(df.apply(tuple, 1))]
 
 # Exportar as linhas diferentes para um novo arquivo Excel
-diff_file_path = "C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\differences_23_08_vs_22_08.xlsx"
+diff_file_path = "C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\differences.xlsx"  # Aqui corrigimos a extensão
 diff_rows.to_excel(diff_file_path, index=False)
 
-# Ler o arquivo "PROPOSTAS YUPPIE 24.08.xlsx"
-df_yuppie = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\PROPOSTAS YUPPIE 24.08.xlsx")
+# Ler o arquivo "PROPOSTAS YUPPI"
+df_yuppie = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\PROPOSTAS YUPPIE 25.08.xlsx")
 
 # Renomear as colunas conforme solicitado
 df_yuppie = df_yuppie.rename(columns={
@@ -63,5 +63,5 @@ for index, row in df_yuppie.iterrows():
             df_yuppie.at[index, "Color"] = "yellow"
 
 # Exportando o arquivo com as alterações
-output_path = "C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\PROPOSTAS_YUPPIE_24_08_colored.xlsx"
+output_path = "C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\BATIMENTO COMPLETO.xlsx"
 df_yuppie.to_excel(output_path, index=False, freeze_panes=(1,0))
