@@ -28,8 +28,7 @@ missing_consignatarias = set(df['CONSIGNATARIA']) - set(df_new['CONSIGNATARIA'])
 diff_rows = df_new[~df_new.apply(tuple, 1).isin(df.apply(tuple, 1))]
 
 # Exportar as linhas diferentes para um novo arquivo Excel
-diff_file_path = "C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\differences.xlsx"  # Aqui corrigimos a extensão
-diff_rows.to_excel(diff_file_path, index=False)
+diff_file_path = "C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\differences.xlsx"
 
 # Ler o arquivo "PROPOSTAS YUPPI"
 df_yuppie = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\PROPOSTAS YUPPIE 25.08.xlsx")
