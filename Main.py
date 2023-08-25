@@ -5,27 +5,35 @@ df = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\AR
 
 # Quantas linhas cada consignatária possui
 consignataria_counts = df['CONSIGNATARIA'].value_counts()
+print(f"Quantas linhas cada consignatária possui: {consignataria_counts}")
 
 # Quantos CPF's exclusivos estão no arquivo
 unique_cpf_count = df['CPF'].nunique()
+print(f"Quantas CPF's exclusivos estão no arquivo: {unique_cpf_count}")
+print("-------------------------------------------")
 
 # Ler o novo arquivo Excel
 df_new = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\ARQUIVO BATIMENTO FILTRADO - 24.08.xlsx")
 
 # Diferença no número total de registros entre os dois arquivos
 total_difference = len(df_new) - len(df)
+print(f"Diferença no número total de registros: {total_difference}")
 
 # Diferença no número de CPFs exclusivos entre os dois arquivos
 unique_cpf_difference = df_new['CPF'].nunique() - df['CPF'].nunique()
+print(f"Diferença no número de CPFs exclusivos: {unique_cpf_difference}")
 
 # Novas consignatárias no arquivo mais recente que não estavam no anterior
 new_consignatarias = set(df_new['CONSIGNATARIA']) - set(df['CONSIGNATARIA'])
+print(f"Novas consignatárias no arquivo mais recente: {new_consignatarias}")
 
 # Consignatárias do arquivo anterior que não estão no mais recente
 missing_consignatarias = set(df['CONSIGNATARIA']) - set(df_new['CONSIGNATARIA'])
+print(f"Consignatárias ausentes no arquivo mais recente: {missing_consignatarias}")
 
 # Identificar as linhas novas ou diferentes no arquivo mais recente
 diff_rows = df_new[~df_new.apply(tuple, 1).isin(df.apply(tuple, 1))]
+print(f"Número de linhas novas ou diferentes no arquivo mais recente: {len(diff_rows)}")
 
 # Exportar as linhas diferentes para um novo arquivo Excel
 diff_file_path = "C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\differences.xlsx"
