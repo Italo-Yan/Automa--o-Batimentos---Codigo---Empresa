@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Ler o arquivo Excel
-df = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\ARQUIVO BATIMENTO FILTRADO - 23.08.xlsx")
+df = pd.read_excel("ARQUIVO FILTRADO 2")
 
 # Quantas linhas cada consignatária possui
 consignataria_counts = df['CONSIGNATARIA'].value_counts()
@@ -13,7 +13,7 @@ print(f"Quantas CPF's exclusivos estão no arquivo: {unique_cpf_count}")
 print("-------------------------------------------")
 
 # Ler o novo arquivo Excel
-df_new = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\ARQUIVO BATIMENTO FILTRADO - 24.08.xlsx")
+df_new = pd.read_excel("ARQUIVO FILTRADO 2")
 
 # Diferença no número total de registros entre os dois arquivos
 total_difference = len(df_new) - len(df)
@@ -50,11 +50,11 @@ else:
 diff_rows = df_new[~df_new.apply(tuple, 1).isin(df.apply(tuple, 1))]
 print(f"Número de linhas novas ou diferentes no arquivo mais recente: {len(diff_rows)}")
 
-# Ler o arquivo "PROPOSTAS YUPPI"
-df_yuppie = pd.read_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\PROPOSTAS YUPPIE 25.08.xlsx")
+# Ler o arquivo "PROPOSTAS"
+df_arquivo = pd.read_excel("ARQUIVO EXTRATO")
 
 # Renomear as colunas conforme solicitado
-df_yuppie = df_yuppie.rename(columns={
+df_arquivo = df_arquivo.rename(columns={
     "CPF CLIENTE": "CPF",
     "DATA DIGITAÇÃO": "Data Digitação",
     "BANCO": "Consignataria"
@@ -74,9 +74,9 @@ def color_row_based_on_color_column(series):
     return [color] * len(series)
 
 # Comparação e atribuição das cores
-df_yuppie["Color"] = ""
+df_arquivo["Color"] = ""
 
-for index, row in df_yuppie.iterrows():
+for index, row in df_arquivo.iterrows():
     # Filtrando a linha correspondente no dataframe de diferenças
     matching_row = diff_rows[
         (diff_rows["CPF"] == row["CPF"]) & 
@@ -85,15 +85,18 @@ for index, row in df_yuppie.iterrows():
     
     if matching_row.empty:
         # Caso o CPF não seja encontrado naquela consignatária
-        df_yuppie.at[index, "Color"] = "red"
+        df_arquivo.at[index, "Color"] = "red"
     else:
         # Calculando a diferença entre as datas
         date_diff = (matching_row["DEFERIMENTO"].iloc[0] - row["Data Digitação"]).days
         if date_diff <= 7:
-            df_yuppie.at[index, "Color"] = "green"
+            df_arquivo.at[index, "Color"] = "green"
         else:
-            df_yuppie.at[index, "Color"] = "yellow"
+            df_arquivo.at[index, "Color"] = "yellow"
 
 # Aplicando a coloração e exportando o arquivo
-styled_yuppie = df_yuppie.style.apply(color_row_based_on_color_column, axis=1)
-styled_yuppie.to_excel("C:\\Users\\italo.mendes\\Desktop\\Automação-Batimentos\\BATIMENTO COMPLETO ESTILIZADO.xlsx", engine='openpyxl', index=False)
+styled_arquivo = df_arquivo.style.apply(color_row_based_on_color_column, axis=1)
+styled_arquivo.to_excel("EXPORTAÇÃO DO ARQUIVO", engine='openpyxl', index=False)
+
+
+#PROJETO DESATIVADO ! ! !
