@@ -99,4 +99,4 @@ styled_arquivo = df_arquivo.style.apply(color_row_based_on_color_column, axis=1)
 styled_arquivo.to_excel("EXPORTAÇÃO DO ARQUIVO", engine='openpyxl', index=False)
 
 
-#PROJETO DESATIVADO ! ! !
+#PROJETO DESATIVADO ! ! ! !
